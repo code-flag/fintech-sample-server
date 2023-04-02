@@ -1,0 +1,24 @@
+{
+  "name": "main-website-server",
+  "version": "1.0.0",
+  "description": "berenia website backend server",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Francis Olawumi",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.1",
+    "nodemailer-express-handlebars": "^6.1.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemon": "^2.0.22"
+  }
+}
