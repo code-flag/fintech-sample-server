@@ -1,6 +1,6 @@
 import { emailResponse } from "../helpers/contact-response.js";
 import { sendMail } from "../helpers/send-mail.js";
-import { sendResetPassword } from "../helpers/sendResetPassword.js";
+// import { sendResetPassword } from "../helpers/sendResetPassword.js";
 import { config } from "dotenv";
 config();
 export const contactUsMessage = async (req, res) => {
