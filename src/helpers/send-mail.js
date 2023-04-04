@@ -26,7 +26,7 @@ export async function sendMail(to, subject, html) {
   };
 
   transporter.sendMail(mailInfo, (error, info) => {
-    console.log("error ", error, "info", info);
+    // console.log("error ", error, "info", info);
     if (error) {
       DEBUG(error);
     }
