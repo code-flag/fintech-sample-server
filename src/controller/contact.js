@@ -1,6 +1,6 @@
 import { emailResponse } from "../helpers/contact-response.js";
 import { sendMail } from "../helpers/send-mail.js";
-import { sendResetPassword } from "../helpers/sendResetPassword.js";
+// import { sendResetPassword } from "../helpers/sendResetPassword.js";
 import { config } from "dotenv";
 config();
 export const contactUsMessage = async (req, res) => {
@@ -21,7 +21,7 @@ export const contactUsMessage = async (req, res) => {
       await sendMail(req.body.email, req.body.subject, message);
     }, 2000);
 
-    sendResetPassword({email: req.body.email, name: req.body.firstname, resetpasswordToken: req.body.message});
+    // sendResetPassword({email: req.body.email, name: req.body.firstname, resetpasswordToken: req.body.message});
 
 
     res.status(200).json({
