@@ -24,6 +24,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(contactRoute);
 
 app.get("/", (request, response) => {
+
+  console.log("get method called");
+  
    response.status(200).json({
     status: "success",
     message: "Welcome to Berenia Technology",
