@@ -4,16 +4,18 @@ import express from "express";
 import contactRoute from "./routes/contact.route.js";
 import errorHandlingMiddleware from "./middleware/error-handling.middleware.js";
 import { NotFoundError } from "./helpers/error.js";
-
-
-
+import expressHbs from "express-handlebars";
 config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+// setup for handlebars template
+app.engine(".handlebars", expressHbs.engine({ extname: ".handlebars" }));
+app.set("view engine", ".handlebars");
+app.set("views", "./src/views");
+// setup for cors error issue
 app.use(cors({
-  origin: '*',
+  origin: "*",
   methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
   credentials: false
 }));
