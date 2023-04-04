@@ -4,7 +4,7 @@ import { sendMail } from "../helpers/send-mail.js";
 import { config } from "dotenv";
 config();
 export const contactUsMessage = async (req, res) => {
-  // console.log("message", req.body.email);
+  console.log("message", req.body.email);
   const bereniaMailRes = await sendMail(
     process.env.EMAIL_USER,
     req.body.subject,

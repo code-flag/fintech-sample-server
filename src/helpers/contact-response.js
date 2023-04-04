@@ -2,14 +2,14 @@ export const emailResponse = (data) => {
   return  `
     <!-- Complete Email template -->
 
-<body style="background-color:grey">
+<body style="background: #fdfdff">
 	<table align="center" border="0" cellpadding="0" cellspacing="0"
-		width="550" bgcolor="white" style="border:2px solid black">
+		width="100%" bgcolor="#fdfdff" style="border: none">
 		<tbody>
 			<tr>
 				<td align="center">
 					<table align="center" border="0" cellpadding="0"
-						cellspacing="0" class="col-550" width="550">
+						cellspacing="0" class="col" width="inherit">
 						<tbody>
 							<tr>
 								<td align="center" style="background-color: #2e6ffc;
@@ -29,17 +29,17 @@ export const emailResponse = (data) => {
 			</tr>
 			<tr style="height: 300px;">
 				<td align="left" style="border: none;
-						border-bottom: 2px solid #2e6ffc;
+						border-bottom: 1px solid #f0f0ff;
 						padding-right: 20px;padding-left:20px">
-                    <h2>Hello ${data.firstName}, </h2>
+                    <div>Hello ${data.firstName}, </div>
 
-					<p style="font-weight: bold; font-size: 20px;
-                    letter-spacing: 0.025em;
-                    color:black;">
+					<p style="font-size: inherit;
+                    letter-spacing: inherit; line-height: inherit;
+                    color: inherit;">
 					Top of the day to you. This is to inform you that we have received your message and that you will receive feedback soon.
 					</p>
 
-                    <h2> Regards <br> Francis</h2>
+                    <b> Regards <br> Francis</b>
 
 				</td>
 			</tr>
@@ -48,8 +48,8 @@ export const emailResponse = (data) => {
 				<td style="height: 150px;
 						padding: 20px;
 						border: none;
-						border-bottom: 2px solid #361B0E;
-						background-color: white;">
+						border-bottom: 1px solid #361B0E;
+						background-color: f9f9f9;">
 					
 					<h2 style="text-align: left;
 							align-items: center;">
@@ -68,6 +68,7 @@ export const emailResponse = (data) => {
 "https://www.berenia.com"
 						style="text-decoration: none;
 								color:black;
+								border-radius: 8px;
 								border: 2px solid #2e6ffc;
 								padding: 10px 30px;
 								font-weight: bold;">
