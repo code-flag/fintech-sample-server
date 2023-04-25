@@ -17,6 +17,7 @@ export const contactUsMessage = async (req, res) => {
     );
   
     setTimeout(async () => {
+      req.body.message = "Top of the day to you. This is to inform you that we have received your message and that you will receive feedback soon.";
       let message = await emailResponse(req.body);
       await sendMail(req.body.email, req.body.subject, message);
     }, 2000);

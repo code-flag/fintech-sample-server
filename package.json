@@ -20,6 +20,10 @@
     "nodemailer": "^6.9.1",
     "nodemailer-express-handlebars": "^6.1.0",
     "nodemailer-smtp-transport": "^2.7.4",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.6",
+    "mongoose-paginate-v2": "^1.7.0",
+    "paystack-api": "^2.0.6"
   }
 }

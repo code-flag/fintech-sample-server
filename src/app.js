@@ -1,9 +1,10 @@
 import cors from "cors";
 import { config } from "dotenv";
 import express from "express";
-import contactRoute from "./routes/contact.route.js";
+import apiRoutes from "./routes/index.routes.js";
 import errorHandlingMiddleware from "./middleware/error-handling.middleware.js";
 import { NotFoundError } from "./helpers/error.js";
+import { DBConnection } from './config/connection.js';
 
 config();
 
@@ -19,8 +20,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+/** ________________________Database connection_________________________ */
+DBConnection();
 
-app.use(contactRoute);
+
+app.use(apiRoutes);
 
 app.get("/", (request, response) => {
 
