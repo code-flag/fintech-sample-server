@@ -5,7 +5,7 @@ import { getOneStudentData, getStudentsData } from "../controller/students.contr
 
 const router = Router();
 
- router.get("/:email", getOneStudentData);
- router.get("/", getStudentsData);
+ router.get("/one/:email", getOneStudentData);
+ router.get("/all", getStudentsData);
  
  export default router;

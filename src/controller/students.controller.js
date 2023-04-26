@@ -2,7 +2,7 @@ import { NotFoundError } from "../helpers/error.js";
 import { getAllStudentInfo, getOneStudentInfo } from "../models/queries/student-data.query.js";
 
 export const getStudentsData = async (req, res) => {
-    const userData = await getAllStudentInfo()
+    const userData = await getAllStudentInfo();
 
     if (userData) {
         res.status(200).json({
@@ -23,7 +23,7 @@ export const getStudentsData = async (req, res) => {
 }
 
 export const getOneStudentData = async (req, res) => {
-    const email = req.query;
+    const email = req.params.email;
     const userData = await getOneStudentInfo(email);
 
     if (userData) {

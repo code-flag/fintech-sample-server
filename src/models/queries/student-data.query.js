@@ -12,7 +12,7 @@ export const saveStudentInfo = async (userData) => {
 
 export const getAllStudentInfo = async () => {
     try {
-        return await students.find();
+        return await students.find().populate("transactions");
     } catch (error) {
         console.log("Student info error", error);
     }
@@ -20,9 +20,7 @@ export const getAllStudentInfo = async () => {
 
 export const getOneStudentInfo = async (email) => {
     try {
-        return await students.findOne({email: email}).populate([
-            { path: "transactions"},
-          ]);;
+        return await students.findOne({email: email}).populate("transactions");
     } catch (error) {
         console.log("Student info error", error);
     }
