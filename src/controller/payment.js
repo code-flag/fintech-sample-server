@@ -2,19 +2,21 @@
 // import { sendResetPassword } from "../helpers/sendResetPassword.js";
 import { config } from "dotenv";
 import paystackHelper from "../helpers/paystack.js";
+import {BadRequestError}  from "../helpers/error.js";
 import {  getOneUserPaymentInfo, saveUserPaymentInfo, updatePaymentInfo } from "../models/queries/payment.query.js";
 import { paymentEmailResponse } from "../helpers/payment-response.js";
+import { sendMail } from "../helpers/send-mail.js";
 
 config();
 
 export const paymentController = async (req, res) => {
-  const {firstName, lastName, phoneNum, email} = req.body;
+  const {firstName, lastName, mobile, email} = req.body;
   
     if(
         firstName != "" && firstName != null &&
         lastName != "" && lastName != null &&
         email != "" && email != null &&
-        phoneNum != "" && phoneNum != null
+        mobile != "" && mobile != null
     ){
         req.body.subject = "Payment for Berenia Bootcamp";
         req.body.course = "web development bootcamp";
@@ -25,7 +27,7 @@ export const paymentController = async (req, res) => {
           firstName: firstName,
           lastName: lastName,
           email: email,
-          mobile: phoneNum,
+          mobile: mobile,
           amount: amount,
           paymentStatus: "pending",
           courseTitle: req.body.course,
@@ -34,10 +36,16 @@ export const paymentController = async (req, res) => {
 
         const checkUser = await getOneUserPaymentInfo(email);
         if (!checkUser) {
-          throw new Error("User already exist");
+          // throw new BadRequestError("User already exist");
+          // res.status(200).json({
+          //   status: "error",
+          //   message: "User Already exist",
+          // });
+
+          await saveUserPaymentInfo(userData);
         }else
         {
-          await saveUserPaymentInfo(userData);
+          // await saveUserPaymentInfo(userData);
         }
         
         try {
@@ -48,7 +56,7 @@ export const paymentController = async (req, res) => {
             userData
           );
 
-        [paystackPaymentUrl, paystackReference] = [
+        const [paystackPaymentUrl, paystackReference] = [
           authorization_url,
           reference,
         ];
@@ -63,16 +71,14 @@ export const paymentController = async (req, res) => {
             `<div style="background: #fff; padding: 10px;">
                 <h2>New Certificate Payment</h2>
                 <h3>From: ${req.body.firstName + " " + req.body.lastName}  </h3>
-                <p> ${req.body.message}</p>
+                <p> New student is paying for certificate</p>
                 </div>`
           );
         
           setTimeout(async () => {
             let message = await paymentEmailResponse({
               firstName: firstName,
-               message: `This is to notify you that we've recieved your payment for 2023 
-               Berenia web development bootcamp. Your certificate will be forwarded to this 
-               email soon. <br> We wish you greater heights and more opportunities in all your endeavors.
+               message: `This is to notify you that you initiated a payment for Berenia 2023 web bootcamp certificate.
             `})
             await sendMail(req.body.email, req.body.subject, message);
           }, 2000);
@@ -95,7 +101,7 @@ export const paymentController = async (req, res) => {
     else {
         res.status(400).json({
             status: "error",
-            message: error.message,
+            message: "Imcompleted data. All fields are required",
           });
     }
   

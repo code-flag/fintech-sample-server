@@ -1,7 +1,6 @@
 
 
 import { Router } from "express";
-import { contactUsMessage } from "../controller/contact.js";
 import { paymentController } from "../controller/payment.js";
 import { trackPaystackEvent } from "../controller/paymentWebhook.js";
 

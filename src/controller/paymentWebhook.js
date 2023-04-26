@@ -1,5 +1,9 @@
 import { paymentEmailResponse } from "../helpers/payment-response.js";
 import { updatePaymentInfo } from "../models/queries/payment.query.js";
+import { sendMail } from "../helpers/send-mail.js";
+import * as crypto from 'crypto';
+import { config } from "dotenv";
+config();
 
  /**
    * This method is used get paystack event after user payment
@@ -39,6 +43,17 @@ import { updatePaymentInfo } from "../models/queries/payment.query.js";
        /** send email notification to the resident for payment transaction completion update */
     
         try {
+
+            await sendMail(
+                process.env.EMAIL_USER,
+                "Payment Update",
+                `<div style="background: #fff; padding: 10px;">
+                    <h2>New Certificate Payment Update</h2>
+                    <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  </h3>
+                    <p> This is to notify you that the above named student payment was successful</p>
+                    </div>`
+              );
+
             let message = await paymentEmailResponse({
                 firstName: data.metadata.firstName,
                  message: `This is to notify you that we've recieved your payment for 2023 
