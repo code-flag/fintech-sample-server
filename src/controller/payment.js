@@ -49,7 +49,7 @@ export const paymentController = async (req, res) => {
         if (!checkUser) {
           await saveStudentInfo(userInfo);
           const txn = await saveUserPaymentInfo(userData);
-          console.log("txn", txn);
+          
           if (txn) {
             await updateStudentTransaction(email, {transactions: txn._id});
             // this is used for paystack metadata
@@ -59,7 +59,7 @@ export const paymentController = async (req, res) => {
         }else
         {
           const txn = await saveUserPaymentInfo(userData);
-          console.log("txn 2", txn);
+        
           if (txn) {
             await updateStudentTransaction(email, {transactions: txn._id});
              // this is used for paystack metadata
@@ -85,7 +85,7 @@ export const paymentController = async (req, res) => {
            { paymentRef: paystackReference });
 
           const bereniaMailRes = await sendMail(
-            process.env.EMAIL_USER,
+            process.env?.EMAIL_USER,
             req.body.subject,
             `<div style="background: #fff; padding: 10px;">
                 <h2>New Certificate Payment</h2>
