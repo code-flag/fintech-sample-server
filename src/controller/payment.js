@@ -3,9 +3,10 @@
 import { config } from "dotenv";
 import paystackHelper from "../helpers/paystack.js";
 import {BadRequestError}  from "../helpers/error.js";
-import {  getOneUserPaymentInfo, saveUserPaymentInfo, updatePaymentInfo } from "../models/queries/payment.query.js";
+import { saveUserPaymentInfo, updatePaymentInfo } from "../models/queries/payment.query.js";
 import { paymentEmailResponse } from "../helpers/payment-response.js";
 import { sendMail } from "../helpers/send-mail.js";
+import { getOneStudentInfo, saveStudentInfo, updateStudentTransaction } from "../models/queries/student-data.query.js";
 
 config();
 
@@ -23,6 +24,7 @@ export const paymentController = async (req, res) => {
         req.body.amount = 5000;
         const amount = req.body.amount;
 
+        // for transaction schema
         const userData = {
           firstName: firstName,
           lastName: lastName,
@@ -34,18 +36,35 @@ export const paymentController = async (req, res) => {
           timeCreated: new Date().toISOString()
         }
 
-        const checkUser = await getOneUserPaymentInfo(email);
-        if (!checkUser) {
-          // throw new BadRequestError("User already exist");
-          // res.status(200).json({
-          //   status: "error",
-          //   message: "User Already exist",
-          // });
+        // for student data schema
+        const userInfo = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          mobile: mobile,
+        }
 
-          await saveUserPaymentInfo(userData);
+        const checkUser = await getOneStudentInfo(email);
+
+        if (!checkUser) {
+          await saveStudentInfo(userInfo);
+          const txn = await saveUserPaymentInfo(userData);
+          console.log("txn", txn);
+          if (txn) {
+            await updateStudentTransaction(email, {transactions: txn._id});
+            // this is used for paystack metadata
+            userData.txnId = txn._id;
+          }
+          
         }else
         {
-          // await saveUserPaymentInfo(userData);
+          const txn = await saveUserPaymentInfo(userData);
+          console.log("txn 2", txn);
+          if (txn) {
+            await updateStudentTransaction(email, {transactions: txn._id});
+             // this is used for paystack metadata
+             userData.txnId = txn._id;
+          }
         }
         
         try {
@@ -83,8 +102,6 @@ export const paymentController = async (req, res) => {
             await sendMail(req.body.email, req.body.subject, message);
           }, 2000);
       
-         
-      
           res.status(200).json({
             status: "success",
             message: "Good job! kindly made your payment in the next page you will be redirected to. Thank you.",
@@ -107,3 +124,10 @@ export const paymentController = async (req, res) => {
   
 };
 
+export const getOneStudentTransaction = async (req, res) => {
+  console.log("not yet");
+}
+
+export const getAllStudentsTransaction = async (req, res) => {
+  console.log("not yet");
+}

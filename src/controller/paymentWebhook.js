@@ -21,8 +21,7 @@ config();
       .digest("hex");
     if (hash == request.headers["x-paystack-signature"]) {
       const { event, data } = request.body;
-      console.log("paystack response authenticity verified. status", data);
-
+      
       if (event === "charge.success") {
        
         /** if transaction is successful and the payment balance is Zero continue to processing of service request
@@ -35,7 +34,7 @@ config();
           data.status === "success" &&
           data.gateway_response === "Successful" 
         ) {
-            await updatePaymentInfo(data.metadata.email,
+            await updatePaymentInfo(data.metadata.txnId,
                 { paymentStatus: "completed" }
               );
         }
@@ -44,30 +43,41 @@ config();
     
         try {
 
-            await sendMail(
+            try {
+              await sendMail(
                 process.env.EMAIL_USER,
                 "Payment Update",
                 `<div style="background: #fff; padding: 10px;">
-                    <h2>New Certificate Payment Update</h2>
+                    <h2>Certificate Payment Update</h2>
                     <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  </h3>
                     <p> This is to notify you that the above named student payment was successful</p>
                     </div>`
               );
+              
+            } catch (error) {
+              console.log("admin update error", error);
+            }
 
-            let message = await paymentEmailResponse({
+            try {
+              let message = await paymentEmailResponse({
                 firstName: data.metadata.firstName,
                  message: `This is to notify you that we've recieved your payment for 2023 
                  Berenia web development bootcamp. Your certificate will be forwarded to this 
                  email soon. <br> We wish you greater heights and more opportunities in all your endeavors.
               `})
-              await sendMail(data.metadata.email, "Berenia Payment Update", message);
+              setTimeout(async () => {
+                await sendMail(data.metadata.email, "Berenia Payment Update", message);
+              }, 2000);
+            } catch (error) {
+              console.log("user email update error", error);
+            }
         
         } catch (error) {
-          
+          console.log("send payment email update error", error?.message);
         }
       } else {
         /** if paystack return declined event... meaning payment was not successful */
-        await updatePaymentInfo(data.metadata.email,
+        await updatePaymentInfo(data.metadata.txnId,
           { paymentStatus: "failed" }
         );
         

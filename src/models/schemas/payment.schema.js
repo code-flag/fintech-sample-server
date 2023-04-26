@@ -11,7 +11,10 @@ const bereniaPaymentSchema = new Schema({
     paymentRef: {type: String, required: false},
     amount: {type: Number, required: true},
     timeCreated: {type: String, required: false},
-    paymentStatus: {type: String, required: false},
+    paymentStatus: {
+      type: String, 
+      enum: ["pending", "completed", "failed"],
+      required: false},
     courseTitle: {type: String, required: false},
 }, {
   timestamps: true

@@ -25,12 +25,12 @@ export const getOneUserPaymentInfo = async (email) => {
     }
 }
 
-export const updatePaymentInfo = async (email, dataQuery) => {
-    const userInfo = await userPayment.findOne({ email: email});
+export const updatePaymentInfo = async (id, dataQuery) => {
+    const userInfo = await userPayment.findOne({ _id: id});
     if (userInfo) {
         // update the participants
         return await userPayment.updateOne(
-            {email: email},
+            {_id: id},
             {$set: dataQuery }
         );
     }
