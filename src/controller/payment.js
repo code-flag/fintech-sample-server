@@ -81,7 +81,7 @@ export const paymentController = async (req, res) => {
         ];
 
         /** save the payment reference into database */
-        await updatePaymentInfo(email, 
+        await updatePaymentInfo(userData.txnId, 
            { paymentRef: paystackReference });
 
           const bereniaMailRes = await sendMail(
