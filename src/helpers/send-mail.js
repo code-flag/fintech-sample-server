@@ -25,6 +25,7 @@ export async function sendMail(to, subject, html) {
     html: html,
   };
 
+  console.log("mailInfo ", mailInfo);
   transporter.sendMail(mailInfo, (error, info) => {
     // console.log("error ", error, "info", info);
     if (subject == "Berenia Payment Update" || subject == "Payment Update") {

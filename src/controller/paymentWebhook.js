@@ -49,8 +49,6 @@ export const trackPaystackEvent = async (request, response) => {
               "Berenia Payment Update",
               message
             );
-
-            console.log("user email sent");
           }, 5000);
         } catch (error) {
           console.log("user email update error", error);
@@ -58,18 +56,11 @@ export const trackPaystackEvent = async (request, response) => {
         
         try {
           await sendMail(
-            process.env.EMAIL_USER,
+            process.env?.EMAIL_USER,
             "Payment Update",
-            `<div style="background: #fff; padding: 10px;">
-                  <h2>Certificate Payment Update</h2>
-                  <h3>From: ${
-                    data.metadata.firstName + " " + data.metadata.lastName
-                  }  </h3>
-                  <p> This is to notify you that the above named student payment was successful</p>
+            `<div style="background: #fff; padding: 10px;"><h2>Certificate Payment Update</h2> <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  </h3><p> This is to notify you that the above named student payment was successful</p>
                   </div>`
           );
-
-          console.log("admin email sent");
         } catch (error) {
           console.log("admin update error", error);
         }
