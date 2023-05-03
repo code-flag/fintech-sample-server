@@ -2,7 +2,6 @@
 // import { sendResetPassword } from "../helpers/sendResetPassword.js";
 import { config } from "dotenv";
 import paystackHelper from "../helpers/paystack.js";
-import {BadRequestError}  from "../helpers/error.js";
 import { saveUserPaymentInfo, updatePaymentInfo } from "../models/queries/payment.query.js";
 import { paymentEmailResponse } from "../helpers/payment-response.js";
 import { sendMail } from "../helpers/send-mail.js";
@@ -100,7 +99,7 @@ export const paymentController = async (req, res) => {
                message: `This is to notify you that you initiated a payment for Berenia 2023 web bootcamp certificate.
             `})
             await sendMail(req.body.email, req.body.subject, message);
-          }, 2000);
+          }, 5000);
       
           res.status(200).json({
             status: "success",
@@ -118,7 +117,7 @@ export const paymentController = async (req, res) => {
     else {
         res.status(400).json({
             status: "error",
-            message: "Imcompleted data. All fields are required",
+            message: "Incompleted data. All fields are required",
           });
     }
   
