@@ -22,14 +22,16 @@ export async function sendMail(to, subject, html) {
     to: to,
     subject: subject,
     attachDataUrls: true,
+    text: "",
     html: html,
   };
 
-  console.log("mailInfo ", mailInfo);
   transporter.sendMail(mailInfo, (error, info) => {
     // console.log("error ", error, "info", info);
     if (subject == "Berenia Payment Update" || subject == "Payment Update") {
-      console.log("error ", error, "info", info);
+      console.log("transporter", transporter);
+      // console.log("error ", error, "info", info);
+
     }
     if (error) {
       DEBUG(error);

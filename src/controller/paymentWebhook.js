@@ -44,7 +44,7 @@ export const trackPaystackEvent = async (request, response) => {
                 `,
           });
           setTimeout(async () => {
-            await sendMail(
+            let res = await sendMail(
               data.metadata.email,
               "Berenia Payment Update",
               message
@@ -55,7 +55,7 @@ export const trackPaystackEvent = async (request, response) => {
         }
         
         try {
-          await sendMail(
+          let res = await sendMail(
             process.env?.EMAIL_USER,
             "Payment Update",
             `<div style="background: #fff; padding: 10px;"><h2>Certificate Payment Update</h2> <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  </h3><p> This is to notify you that the above named student payment was successful</p>
