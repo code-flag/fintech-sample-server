@@ -58,7 +58,7 @@ export const trackPaystackEvent = async (request, response) => {
           let res = await sendMail(
             process.env?.EMAIL_USER,
             "Payment Update",
-            `<div style="background: #fff; padding: 10px;"><h2>Certificate Payment Update</h2> <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  </h3><p> This is to notify you that the above named student payment was successful</p>
+            `<div style="background: #fff; padding: 10px;"><h2>Certificate Payment Update</h2> <h3>From: ${data.metadata.firstName + " " + data.metadata.lastName}  <br> Email: ${data.metadata.email} </h3><p> This is to notify you that the above named student payment was successful</p>
                   </div>`
           );
         } catch (error) {
