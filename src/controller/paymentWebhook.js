@@ -35,27 +35,27 @@ export const trackPaystackEvent = async (request, response) => {
 
         /** send email notification to the resident for payment transaction completion update */
 
-        // try {
-        //   let message = await paymentEmailResponse({
-        //     firstName: data.metadata.firstName,
-        //     message: `This is to notify you that we've recieved your payment for 2023 
-        //            Berenia web development bootcamp. Your certificate will be forwarded to this 
-        //            email soon. <br> We wish you greater heights and more opportunities in all your endeavors.
-        //         `,
-        //   });
-        //   setTimeout(async () => {
-        //     await sendMail(
-        //       data.metadata.email,
-        //       "Berenia Payment Update",
-        //       message
-        //     );
-        //   }, 2000);
-        // } catch (error) {
-        //   console.log("user email update error", error);
-        // }
-        
-        console.log("email data", data);
+        try {
+          let message = await paymentEmailResponse({
+            firstName: data.metadata.firstName,
+            message: `This is to notify you that we've recieved your payment for 2023 
+                   Berenia web development bootcamp. Your certificate will be forwarded to this 
+                   email soon. <br> We wish you greater heights and more opportunities in all your endeavors.
+                `,
+          });
+          setTimeout(async () => {
+            await sendMail(
+              data.metadata.email,
+              "Berenia Payment Update",
+              message
+            );
 
+            console.log("user email sent");
+          }, 5000);
+        } catch (error) {
+          console.log("user email update error", error);
+        }
+        
         try {
           await sendMail(
             process.env.EMAIL_USER,
@@ -68,6 +68,8 @@ export const trackPaystackEvent = async (request, response) => {
                   <p> This is to notify you that the above named student payment was successful</p>
                   </div>`
           );
+
+          console.log("admin email sent");
         } catch (error) {
           console.log("admin update error", error);
         }
