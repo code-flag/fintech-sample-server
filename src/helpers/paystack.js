@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import paystack from "paystack-api";
 import debug from "debug";
-
+import axios from 'axios';
 const DEBUG = debug("dev");
 
 config();
