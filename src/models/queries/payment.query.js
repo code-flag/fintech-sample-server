@@ -19,7 +19,7 @@ export const getAllPaymentInfo = async () => {
 
 export const getOneUserPaymentInfo = async (email) => {
     try {
-        return await userTransaction.findOne({email: email});
+        return await userTransaction.find({email: email});
     } catch (error) {
         console.log("payment info error", error);
     }

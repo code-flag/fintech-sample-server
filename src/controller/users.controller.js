@@ -38,7 +38,7 @@ export const signUpUser = async (req, res)=> {
           }
     }
     else {
-        res.status(404).json({
+        res.status(200).json({
             status: "failed",
             message: "Incomplete parameter",
             data: []
@@ -52,15 +52,15 @@ export const getUsersData = async (req, res) => {
     if (userData) {
         res.status(200).json({
             status: "success",
-            message: "Students data retrieved successfully",
+            message: "User data retrieved successfully",
             data: userData
         })
     }
     else {
-        // throw new NotFoundError("No students found")
-        res.status(400).json({
+        // throw new NotFoundError("No User found")
+        res.status(200).json({
             status: "success",
-            message: "no students yet",
+            message: "no User yet",
             data: userData
         })
     }
@@ -69,20 +69,21 @@ export const getUsersData = async (req, res) => {
 
 export const getOneUserData = async (req, res) => {
     const email = req.params.email;
+    console.log(email);
     const userData = await getOneUserInfo(email);
 
     if (userData) {
         res.status(200).json({
             status: "success",
-            message: "Students data retrieved successfully",
+            message: "User data retrieved successfully",
             data: userData
         })
     }
     else {
         // throw new NotFoundError("Student not found");
-        res.status(400).json({
+        res.status(200).json({
             status: "failed",
-            message: "Students not found",
+            message: "User not found",
             data: userData
         })
     }
@@ -95,7 +96,7 @@ export const  loginUser = async (request, response) => {
 
     if (!user) {
     //   throw new UnauthorizedError("Email or password do not match.");
-    return response.status(404).json({
+    return response.status(200).json({
         status: "failed",
         message: "User does not exist",
         data: []
@@ -104,7 +105,7 @@ export const  loginUser = async (request, response) => {
 
     if (!user.validatePassword(password)) {
     //   throw new UnauthorizedError("Email or password do not match.");
-    return response.status(403).json({
+    return response.status(200).json({
         status: "failed",
         message: "password or email does not",
         data: []
