@@ -7,9 +7,11 @@ import {
 import {
   getOneUserPaymentInfo,
   saveUserPaymentInfo,
+  updateTransactionStatus,
 } from "../models/queries/payment.query.js";
 import {
   getOneUserInfo,
+  updateUserInfo,
   updateUserTransaction,
 } from "../models/queries/users.query.js";
 import generateReferenceCode from "../helpers/uniqueAccessCodeGenerator.js";
@@ -81,7 +83,7 @@ export const createTransaction = async (req, res) => {
 
 
         try {
-          const resp = await initiateTransfer(
+          var resp = await initiateTransfer(
             reference,
             recipientCode.recipient,
             amountINKobo,
@@ -100,6 +102,29 @@ export const createTransaction = async (req, res) => {
             } catch (error) {
               console.log(error.message);
             }
+
+            res.status(200).json({
+              status: "success",
+              message: "Transaction completed",
+              data: resp,
+            });
+          }else {
+            try {
+              await updateTransactionStatus(reference , {
+                paymentStatus: "completed",
+              });       
+              
+              const user = await  getOneUserInfo(email);
+              const balance = user.balance - amount;
+              await updateUserInfo(email, {balance: balance});
+            } catch (error) {
+              console.log(error.message);
+            }
+            res.status(200).json({
+              status: "success",
+              message: "Transaction completed",
+              data: resp,
+            });
           }
         } catch (error) {
           try {
@@ -111,16 +136,18 @@ export const createTransaction = async (req, res) => {
             const balance = user.balance - amount;
             await updateUserInfo(email, {balance: balance});
 
+            res.status(200).json({
+              status: "success",
+              message: "Transaction completed",
+              data: resp,
+            });
+
           } catch (error) {
             // console.log(error.message);
           }
         }
 
-        res.status(200).json({
-          status: "success",
-          message: "Transaction completed",
-          data: resp,
-        });
+        
       } catch (error) {
         res.status(200).json({
           status: "failed",
@@ -160,3 +187,5 @@ export const getOneTransaction = async (req, res) => {
 export const getAllTransaction = async (req, res) => {
   console.log("not yet");
 };
+
+

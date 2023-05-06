@@ -96,10 +96,10 @@ export const createTransferRecipient = async (accountName, accountNumber, bankCo
         Authorization: 'Bearer sk_test_0880c1a9a5273248688de6d7bec39a89996d2254',
       },
     });
-    console.log("account details", response.data.data);
+    // console.log("account details", response.data.data);
     return  response.data.data;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 }
 
@@ -116,10 +116,10 @@ export const initiateTransfer = async (reference, recipient, amount, narration, 
         Authorization: 'Bearer sk_test_0880c1a9a5273248688de6d7bec39a89996d2254',
       },
     });
-    console.log("transfer response", response.data.data);
+    // console.log("transfer response", response.data.data);
     return true;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return false;
   }
 }

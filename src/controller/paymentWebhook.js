@@ -37,7 +37,7 @@ export const trackPaystackEvent = async (request, response) => {
           const balance = user.balance - txn.amount;
           await updateUserInfo(txn.email, {balance: balance});
         } catch (error) {
-          console.log("error", error);
+          console.log("error", error.message);
         }
       }
     } else {

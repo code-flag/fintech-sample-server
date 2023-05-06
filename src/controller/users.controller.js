@@ -69,7 +69,6 @@ export const getUsersData = async (req, res) => {
 
 export const getOneUserData = async (req, res) => {
     const email = req.params.email;
-    console.log(email);
     const userData = await getOneUserInfo(email);
 
     if (userData) {
