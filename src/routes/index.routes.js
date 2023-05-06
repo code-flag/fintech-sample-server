@@ -1,14 +1,12 @@
 
 import { Router } from "express";
-import contactRoute from "./contact.route.js";
 import paymentRoute from "./payment.route.js";
-import studentRoute from "./students.route.js";
+import userRoute from "./users.route.js";
 
 
 const router = Router();
 
-router.use("/payment", paymentRoute);
-router.use("/contact", contactRoute);
-router.use("/student", studentRoute);
+router.use("/txn", paymentRoute);
+router.use("/user", userRoute);
 
 export default router;

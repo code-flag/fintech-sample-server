@@ -1,12 +1,13 @@
 
 
 import { Router } from "express";
-import { paymentController } from "../controller/payment.js";
+import { createTransaction, getOneTransaction } from "../controller/transactions.js";
 import { trackPaystackEvent } from "../controller/paymentWebhook.js";
 
 const router = Router();
 
- router.post("/user-payment", paymentController);
+ router.post("/create", createTransaction);
+ router.get("/user/:email", createTransaction);
  router.post("/paystack-webhook", trackPaystackEvent);
  
  export default router;

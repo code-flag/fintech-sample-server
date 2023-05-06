@@ -1,11 +1,13 @@
 
 
 import { Router } from "express";
-import { getOneStudentData, getStudentsData } from "../controller/users.controller.js";
+import { getOneUserData, getUsersData, loginUser, signUpUser } from "../controller/users.controller.js";
 
 const router = Router();
 
- router.get("/one/:email", getOneStudentData);
- router.get("/all", getStudentsData);
+ router.post("/create-user", signUpUser);
+ router.post("/login", loginUser);
+ router.get("/one/:email", getOneUserData);
+ router.get("/all", getUsersData);
  
  export default router;
