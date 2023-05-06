@@ -1,9 +1,9 @@
-import { userPayment } from "../schemas/payment.schema.js";
+import { userTransaction } from "../schemas/payment.schema.js";
 
 
 export const saveUserPaymentInfo = async (userData) => {
     try {
-        return await userPayment.create(userData)
+        return await userTransaction.create(userData)
     } catch (error) {
         console.log("payment info error", error);
     }
@@ -11,7 +11,7 @@ export const saveUserPaymentInfo = async (userData) => {
 
 export const getAllPaymentInfo = async () => {
     try {
-        return await userPayment.find();
+        return await userTransaction.find();
     } catch (error) {
         console.log("payment info error", error);
     }
@@ -19,18 +19,40 @@ export const getAllPaymentInfo = async () => {
 
 export const getOneUserPaymentInfo = async (email) => {
     try {
-        return await userPayment.findOne({email: email});
+        return await userTransaction.findOne({email: email});
+    } catch (error) {
+        console.log("payment info error", error);
+    }
+}
+
+export const getOneUserTxByRef = async (reference) => {
+    try {
+        return await userTransaction.findOne({reference: reference});
     } catch (error) {
         console.log("payment info error", error);
     }
 }
 
 export const updatePaymentInfo = async (id, dataQuery) => {
-    const userInfo = await userPayment.findOne({ _id: id});
+    const userInfo = await userTransaction.findOne({ _id: id});
     if (userInfo) {
         // update the participants
-        return await userPayment.updateOne(
+        return await userTransaction.updateOne(
             {_id: id},
+            {$set: dataQuery }
+        );
+    }
+    else {
+        return false;
+    }
+}
+
+export const updateTransactionStatus = async (reference, dataQuery) => {
+    const userInfo = await userTransaction.findOne({ reference: reference});
+    if (userInfo) {
+        // update the participants
+        return await userTransaction.updateOne(
+            {reference: reference},
             {$set: dataQuery }
         );
     }
@@ -41,7 +63,7 @@ export const updatePaymentInfo = async (id, dataQuery) => {
 
 export const deletePaymentInfo = async () => {
     try {
-        return await userPayment.deleteOne({email: email});
+        return await userTransaction.deleteOne({email: email});
     } catch (error) {
         console.log("payment info error", error);
         return false

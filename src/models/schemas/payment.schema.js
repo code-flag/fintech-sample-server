@@ -3,29 +3,30 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const { Schema } = mongoose;
 
-const bereniaPaymentSchema = new Schema({
-    firstName: {type: String, required: true}, // gate-house access key
-    lastName: {type: String, required: true}, // estate id
-    email: {type: String, required: true}, // gate-house
-    mobile: {type: String, required: true},
-    paymentRef: {type: String, required: false},
-    amount: {type: Number, required: true},
+const transactionSchema = new Schema({
+    email:  {type: String, required: true},
+    amount:  {type: String, required: true},
+    bankCode:  {type: String, required: true},
+    bankName:  {type: String, required: true},
+    recipientName:  {type: String, required: true},
+    narration:  {type: String, required: true},
+    reference:  {type: String, required: true},
     timeCreated: {type: String, required: false},
     paymentStatus: {
       type: String, 
       enum: ["pending", "completed", "failed"],
       required: false},
-    courseTitle: {type: String, required: false},
+    paymentRef: {type: String, required: false},
 }, {
   timestamps: true
 });
 
-  bereniaPaymentSchema.set("toJSON", {
+  transactionSchema.set("toJSON", {
     transform: function (doc, ret, options) {
       delete ret.__v;
     },
   });
 
-  bereniaPaymentSchema.plugin(mongoosePaginate);
+  transactionSchema.plugin(mongoosePaginate);
 
-  export const userPayment = mongoose.model("bereniaUserPayments", bereniaPaymentSchema);
+  export const userTransaction = mongoose.model("transactions", transactionSchema);

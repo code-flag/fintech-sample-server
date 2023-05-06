@@ -1,7 +1,7 @@
 
 
 import { Router } from "express";
-import { getOneStudentData, getStudentsData } from "../controller/students.controller.js";
+import { getOneStudentData, getStudentsData } from "../controller/users.controller.js";
 
 const router = Router();
 

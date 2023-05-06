@@ -82,3 +82,44 @@ export default {
     }
   },
 };
+
+export const createTransferRecipient = async (accountName, accountNumber, bankCode) => {
+  try {
+    const response = await axios.post(`https://api.paystack.co/transferrecipient`,{
+      "type": "nuban", 
+      "name": accountName, 
+      "account_number": accountNumber, 
+      "bank_code": bankCode, 
+      "currency": "NGN"
+    }, {
+      headers: {
+        Authorization: 'Bearer sk_test_0880c1a9a5273248688de6d7bec39a89996d2254',
+      },
+    });
+    console.log("account details", response.data.data);
+    return  response.data.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const initiateTransfer = async (reference, recipient, amount, narration, source = "balance") => {
+  try {
+    const response = await axios.post(`https://api.paystack.co/transfer`,{
+      "source": source, 
+      "amount": amount,
+      "reference": reference, 
+      "recipient": recipient, 
+      "reason": narration ?? "not available" 
+    }, {
+      headers: {
+        Authorization: 'Bearer sk_test_0880c1a9a5273248688de6d7bec39a89996d2254',
+      },
+    });
+    console.log("transfer response", response.data.data);
+    return true;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
