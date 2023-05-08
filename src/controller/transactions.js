@@ -52,6 +52,7 @@ export const createTransaction = async (req, res) => {
       bankCode: bankCode,
       bankName: bankName,
       recipientName: recipientName,
+      accountNumber: accountNumber,
       narration: narration,
       reference: reference,
       paymentStatus: "pending",

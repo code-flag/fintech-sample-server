@@ -9,6 +9,7 @@ const transactionSchema = new Schema({
     bankCode:  {type: String, required: true},
     bankName:  {type: String, required: true},
     recipientName:  {type: String, required: true},
+    accountNumber: {type: String},
     narration:  {type: String, required: true},
     reference:  {type: String, required: true},
     timeCreated: {type: String, required: false},
